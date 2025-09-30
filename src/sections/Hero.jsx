@@ -1,10 +1,83 @@
 import React from "react";
 import GradientButton from "../components/GradientButton";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 
 const Hero = ({ name, title, accent }) => {
+  const heroRef = React.useRef(null);
+
+  //pin hero section
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+      pin: true,
+      pinSpacing: false,
+      scrub: true,
+    });
+    SplitText.create("h1", {
+      type: "lines,words",
+      mask: "lines",
+      autoSplit: true,
+      onSplit(self) {
+        gsap.from(self.words, {
+          y: 100,
+          opacity: 0,
+          stagger: 0.1,
+          delay: 0.3,
+        });
+      },
+    });
+
+    SplitText.create("h2", {
+      type: "lines,words",
+      mask: "lines",
+      autoSplit: true,
+      onSplit(self) {
+        gsap.from(self.words, {
+          y: 100,
+          opacity: 0,
+          stagger: 0.1,
+          delay: 0.6,
+        });
+      },
+    });
+
+    gsap.from(".gradient-btn", {
+      opacity: 0,
+      y: 40,
+      duration: 0.6,
+      delay: 1.5,
+      ease: "bounce.out",
+    });
+
+    gsap.from(".star svg", {
+      opacity: 0,
+      scale: 0,
+      rotate: 180,
+      transformOrigin: "center center",
+      duration: 1.3,
+      ease: "back.out(1.7)",
+      onComplete: () => {
+        gsap.to(".star svg", {
+          rotate: "+=360",
+          duration: 20,
+          ease: "linear",
+          repeat: -1,
+        });
+      },
+    });
+  }, {scope: heroRef });
+
   return (
     <>
-      <div>
+      <div ref={heroRef} className="relative overflow-hidden">
         <div className="h-screen main-container flex flex-col lg:justify-center items-start lg:py-12 max-lg:pt-40">
           <h1 className="text-3xl lg:text-[3.2vw] uppercase font-heading font-semibold">
             {name}
@@ -16,6 +89,7 @@ const Hero = ({ name, title, accent }) => {
           <GradientButton
             text="#Let's_Talk!"
             link="mailto:mail.test@mail.com"
+            className="gradient-btn"
           />
         </div>
         <div className="star absolute -z-1 top-80 lg:top-32 right-[-35%] lg:right-[-12%] opacity-80">

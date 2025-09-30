@@ -138,3 +138,7 @@
     display: none;
   }
 }
+
+.text-stable {
+  text-wrap: stable;
+}
