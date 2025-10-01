@@ -11,69 +11,71 @@ const Hero = ({ name, title, accent }) => {
   const heroRef = React.useRef(null);
 
   //pin hero section
-  useGSAP(() => {
-    ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: "top top",
-      end: "bottom top",
-      scrub: 1,
-      pin: true,
-      pinSpacing: false,
-      scrub: true,
-    });
-    SplitText.create("h1", {
-      type: "lines,words",
-      mask: "lines",
-      autoSplit: true,
-      onSplit(self) {
-        gsap.from(self.words, {
-          y: 100,
-          opacity: 0,
-          stagger: 0.1,
-          delay: 0.3,
-        });
-      },
-    });
+  useGSAP(
+    () => {
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        pin: true,
+        pinSpacing: false,
+        scrub: true,
+      });
+      SplitText.create("h1", {
+        type: "lines,words",
+        mask: "lines",
+        autoSplit: true,
+        onSplit(self) {
+          gsap.from(self.words, {
+            y: 100,
+            opacity: 0,
+            stagger: 0.1,
+            delay: 0.3,
+          });
+        },
+      });
 
-    SplitText.create("h2", {
-      type: "lines,words",
-      mask: "lines",
-      autoSplit: true,
-      onSplit(self) {
-        gsap.from(self.words, {
-          y: 100,
-          opacity: 0,
-          stagger: 0.1,
-          delay: 0.6,
-        });
-      },
-    });
+      SplitText.create("h2", {
+        type: "lines,words",
+        mask: "lines",
+        autoSplit: true,
+        onSplit(self) {
+          gsap.from(self.words, {
+            y: 100,
+            opacity: 0,
+            stagger: 0.1,
+            delay: 0.6,
+          });
+        },
+      });
 
-    gsap.from(".gradient-btn", {
-      opacity: 0,
-      y: 40,
-      duration: 0.6,
-      delay: 1.5,
-      ease: "bounce.out",
-    });
+      gsap.from(".gradient-btn", {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        delay: 1.5,
+        ease: "bounce.out",
+      });
 
-    gsap.from(".star svg", {
-      opacity: 0,
-      scale: 0,
-      rotate: 180,
-      transformOrigin: "center center",
-      duration: 1.3,
-      ease: "back.out(1.7)",
-      onComplete: () => {
-        gsap.to(".star svg", {
-          rotate: "+=360",
-          duration: 20,
-          ease: "linear",
-          repeat: -1,
-        });
-      },
-    });
-  }, {scope: heroRef });
+      gsap.from(".star svg", {
+        opacity: 0,
+        scale: 0,
+        rotate: 180,
+        transformOrigin: "center center",
+        duration: 1.3,
+        ease: "back.out(1.7)",
+        onComplete: () => {
+          gsap.to(".star svg", {
+            rotate: "+=360",
+            duration: 20,
+            ease: "linear",
+            repeat: -1,
+          });
+        },
+      });
+    },
+    { scope: heroRef }
+  );
 
   return (
     <>

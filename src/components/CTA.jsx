@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useRef } from "react";
 import GradientButton from "./GradientButton";
+import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const CTA = () => {
-  const ctaRef = React.useRef(null);
+  const ctaRef = useRef(null);
 
   useGSAP(() => {
     gsap.from(ctaRef.current, {
-      backgroundColor: "#fff",
-      color: "#000",
+      backgroundColor: "white",
       scrollTrigger: {
         trigger: ctaRef.current,
-        start: "center center",
-        end: "60% bottom",
-        scrub: 1,
+        start: "center bottom",
+        end: "bottom bottom",
+        scrub: true,
       },
     });
   });
 
   return (
     <>
-      <div ref={ctaRef}>
-        <div className=" main-container py-20 lg:py-28 h-full flex flex-col gap-8 justify-center items-center">
-          <h4 className=" max-w-6xl text-2xl lg:text-5xl text-center leading-[1.25]">
+      <div
+        ref={ctaRef}
+        className="transition-colors duration-300 mix-blend-difference"
+      >
+        <div className="main-container py-20 lg:py-28 h-full flex flex-col gap-8 justify-center items-center">
+          <h4 className="max-w-6xl text-2xl md:text-3xl xl:text-[40px] 2xl:text-5xl text-center leading-[1.25] mix-blend-difference">
             Freelance projects, collaborations and full-time opportunities.
             Let's get acquainted
           </h4>
-          <GradientButton text={"Book a Call"} link={"/contact"} />
+          <GradientButton className="btn" text="Book a Call" link="/" />
         </div>
       </div>
     </>
